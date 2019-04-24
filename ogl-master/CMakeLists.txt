@@ -514,9 +514,22 @@ create_target_launcher(tutorial17_rotations WORKING_DIRECTORY "${CMAKE_CURRENT_S
 
 # User playground
 add_executable(playground 
-	playground/playground.cpp
-	common/shader.cpp
-	common/shader.hpp
+	playground/App.cpp      playground/InPuts.h                              playground/TEX.cpp
+playground/App.h        playground/KeyBoard.cpp             
+playground/Aspects.cpp  playground/KeyBoard.h      playground/Shader.cpp                           playground/TEX.h
+playground/Aspects.hpp  playground/Light.cpp       playground/Shader.hpp                           playground/VAO.cpp
+playground/Camera.cpp   playground/Light.h          playground/VAO.hpp
+playground/Camera.h     playground/Math.cpp             playground/VBO.hpp
+playground/Debug.h      playground/Math.h            playground/wglext.h
+playground/FBO.cpp      playground/Mouse.cpp             playground/Window.cpp
+playground/FBO.h        playground/Mouse.h         playground/TangentSpace.cpp                     playground/Window.h
+playground/IBO.hpp      playground/playground.cpp  playground/TangentSpace.hpp
+common/objloader.cpp
+common/objloader.hpp
+common/texture.cpp
+common/texture.hpp
+common/vboindexer.cpp
+common/vboindexer.hpp
 )
 target_link_libraries(playground
 	${ALL_LIBS}
