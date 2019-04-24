@@ -35,7 +35,7 @@ void App::init()
 	std::vector<glm::vec2> original_v_tex_cilinder{};
 
 	bool res = loadOBJ(
-		"../tutorial13_normal_mapping/cylinder.obj", 
+		"F:/Users/DELL/Documents/MyOGLProject/ogl-master/tutorial13_normal_mapping/cylinder.obj",
 		original_v_pos_cilinder, 
 		original_v_tex_cilinder, 
 		original_v_nor_cilinder);
@@ -99,13 +99,13 @@ void App::init()
 		v_btg_plane);
 
 	DDSInRAM dds_image_matdiff_wall;
-	dds_image_matdiff_wall.load("../tutorial13_normal_mapping/diffuse.DDS");
+	dds_image_matdiff_wall.load("F:/Users/DELL/Documents/MyOGLProject/ogl-master/tutorial13_normal_mapping/diffuse.DDS");
 
 	DDSInRAM dds_image_matspec_wall;
-	dds_image_matspec_wall.load("../tutorial13_normal_mapping/specular.DDS");
+	dds_image_matspec_wall.load("F:/Users/DELL/Documents/MyOGLProject/ogl-master/tutorial13_normal_mapping/specular.DDS");
 
 	BMPInRAM bmp_image_nor_wall;
-	bmp_image_nor_wall.load("../tutorial13_normal_mapping/normal.bmp");
+	bmp_image_nor_wall.load("F:/Users/DELL/Documents/MyOGLProject/ogl-master/tutorial13_normal_mapping/normal.bmp");
 
 	#pragma endregion
 
@@ -169,8 +169,8 @@ void App::init()
 
 	// Create and compile our GLSL program from the shaders
 	m_program_nor_matlight_shadow_mapped_id = LoadShaders(
-		std::vector<const char*>{"SimpleVertexShader.vertexshader"},
-		std::vector<const char*>{"SimpleFragmentShader.fragmentshader"});
+		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/ogl-master/playground/SimpleVertexShader.vertexshader"},
+		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/ogl-master/playground/SimpleFragmentShader.fragmentshader"});
 
 	// Get a handle for our uniform variables
 	// Only during the initialisation
@@ -193,8 +193,8 @@ void App::init()
 	#pragma region Shadow And FBO
 
 	m_program_shadow_id = LoadShaders(
-		std::vector<const char*>{"ShadowVertexShader.vertexshader"},
-		std::vector<const char*>{"ShadowFragmentShader.fragmentshader"});
+		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/ogl-master/playground/ShadowVertexShader.vertexshader"},
+		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/ogl-master/playground/ShadowFragmentShader.fragmentshader"});
 
 	m_shadow_M_shadow_id = glGetUniformLocation(m_program_shadow_id, "M");
 	m_shadow_V_shadow_id = glGetUniformLocation(m_program_shadow_id, "V");
