@@ -37,8 +37,7 @@
 // - implement detach member function where attach member functions are implemented
 // - making unBind member functions to rebind the OGL object that was bound before invocation of the bind member function
 
-#define sd_debugger
-#include "Debug.h"
+#define GLEW_STATIC
 
 #include <iostream>
 #include <cstdlib>
@@ -54,6 +53,10 @@
 #include <GLFW/glfw3.h>
 
 #include "App.h"
+
+#define sd_debugger
+#include "Debug.h"
+
 
 
 
