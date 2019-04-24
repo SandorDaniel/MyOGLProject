@@ -18,7 +18,7 @@ endif()
 
 
 # Compile external dependencies 
-add_subdirectory (external)
+#add_subdirectory (external)
 
 # On Visual 2005 and above, this module can set the debug working directory
 cmake_policy(SET CMP0026 OLD)
@@ -31,16 +31,24 @@ endif(INCLUDE_DISTRIB)
 
 
 include_directories(
-	external/glfw-3.1.2/include/
+	#external/glfw-3.1.2/include/
+	$ENV{GLFW_INCLUDE_DIR}
 	external/glm-0.9.7.1/
-	external/glew-1.13.0/include/
+	#$ENV{GLM_INCLUDE_DIR}
+	#external/glew-1.13.0/include/
+	$ENV{GLEW_INCLUDE_DIR}
 	.
 )
 
+link_directories($ENV{GLEW_LIBRARY})
+link_directories($ENV{GLFW_LIBRARY})
+
 set(ALL_LIBS
 	${OPENGL_LIBRARY}
-	glfw
-	GLEW_1130
+	#glfw
+	glfw3
+	#GLEW_1130
+	glew32s
 )
 
 add_definitions(
