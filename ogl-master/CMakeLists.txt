@@ -16,29 +16,42 @@ if( CMAKE_BINARY_DIR MATCHES " " )
 endif()
 
 
+set(GLEW_INCLUDE_DIR "$ENV{GLEW_INCLUDE_DIR}" CACHE STRING "Path for glew headers.")
+set(GLFW_INCLUDE_DIR "$ENV{GLFW_INCLUDE_DIR}" CACHE STRING "Path for glfw headers.")
+
 include_directories(
-	$ENV{GLFW_INCLUDE_DIR}
+	"${GLEW_INCLUDE_DIR}"
+	"${GLFW_INCLUDE_DIR}"
 	external/glm-0.9.7.1/
-	$ENV{GLEW_INCLUDE_DIR}
-	.
-)
+	.)
 
-link_directories($ENV{GLEW_LIBRARY})
-link_directories($ENV{GLFW_LIBRARY})
 
-set(ALL_LIBS
-	${OPENGL_LIBRARY}
-	glfw3
-	glew32s
-)
+set(GLEW_LIBRARY "$ENV{GLEW_LIBRARY}" CACHE STRING "Path for glew library.")
+set(GLFW_LIBRARY "$ENV{GLFW_LIBRARY}" CACHE STRING "Path for glfw library.")
 
-#add_definitions(
-	#-DTW_STATIC
-	#-DTW_NO_LIB_PRAGMA
-	#-DTW_NO_DIRECT3D
-	#-DGLEW_STATIC
-	#-D_CRT_SECURE_NO_WARNINGS
-#)
+link_directories(
+    ${GLEW_LIBRARY}
+    ${GLFW_LIBRARY})
+
+
+set(ALL_LIBS ${OPENGL_LIBRARY})
+
+option(IS_GLEW_STATIC "Linkage of GLEW is either static or dynamic" OFF)
+option(IS_GLFW_STATIC "Linkage of GLFW is either static or dynamic" OFF)
+
+if(IS_GLEW_STATIC)
+	list(APPEND ALL_LIBS glew32s)
+	add_definitions(-DGLEW_STATIC)
+else(IS_GLEW_STATIC)
+	list(APPEND ALL_LIBS glew32)
+endif()
+
+if(IS_GLFW_STATIC)
+	list(APPEND ALL_LIBS glfw3)
+else(IS_GLEW_STATIC)
+	list(APPEND ALL_LIBS glfw3dll)
+endif()
+
 
 # User playground
 add_executable(
@@ -90,17 +103,6 @@ target_link_libraries(playground
 	${ALL_LIBS}
 )
 
-SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
-SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*shader$" )
-
-
-#if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
-#add_custom_command(
-#   TARGET playground POST_BUILD
-#   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/playground${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/playground/"
-#)
-#
-#elseif (${CMAKE_GENERATOR} MATCHES "Xcode" )
-#
-#endif (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
+SOURCE_GROUP(Common REGULAR_EXPRESSION ".*/common/.*" )
+SOURCE_GROUP(Shaders REGULAR_EXPRESSION ".*shader$" )
 
