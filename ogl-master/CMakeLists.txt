@@ -44,12 +44,14 @@ if(IS_GLEW_STATIC)
 	add_definitions(-DGLEW_STATIC)
 else(IS_GLEW_STATIC)
 	list(APPEND ALL_LIBS glew32)
+	# We assume that glew32.dll is already added to the "Path" environment variable.
 endif()
 
 if(IS_GLFW_STATIC)
 	list(APPEND ALL_LIBS glfw3)
 else(IS_GLEW_STATIC)
 	list(APPEND ALL_LIBS glfw3dll)
+	# We assume that glfw3.dll is already added to the "Path" environment variable.
 endif()
 
 
