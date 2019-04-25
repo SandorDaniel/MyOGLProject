@@ -103,6 +103,12 @@ target_link_libraries(playground
 	${ALL_LIBS}
 )
 
+
 SOURCE_GROUP(Common REGULAR_EXPRESSION ".*/common/.*" )
 SOURCE_GROUP(Shaders REGULAR_EXPRESSION ".*shader$" )
 
+
+configure_file("tutorial13_normal_mapping/cylinder.obj.in" "cylinder.obj" COPYONLY)
+configure_file("tutorial13_normal_mapping/diffuse.DDS.in" "diffuse.DDS" COPYONLY)
+configure_file("tutorial13_normal_mapping/specular.DDS.in" "specular.DDS" COPYONLY)
+configure_file("tutorial13_normal_mapping/normal.bmp.in" "normal.bmp" COPYONLY)
