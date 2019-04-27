@@ -18,12 +18,19 @@ endif()
 
 set(GLEW_INCLUDE_DIR "$ENV{GLEW_INCLUDE_DIR}" CACHE STRING "Path for glew headers.")
 set(GLFW_INCLUDE_DIR "$ENV{GLFW_INCLUDE_DIR}" CACHE STRING "Path for glfw headers.")
+set(GLM_INCLUDE_DIR "$ENV{GLM_INCLUDE_DIR}" CACHE STRING "Path for GLM headers.")
 
 include_directories(
 	"${GLEW_INCLUDE_DIR}"
 	"${GLFW_INCLUDE_DIR}"
-	external/glm-0.9.7.1/
 	.)
+	
+option(IS_GLM_STANDARD "Wether GLM is standrad or our fake one." OFF)
+if( IS_GLM_STANDARD )
+	include_directories("${GLM_INCLUDE_DIR}")
+else( IS_GLM_STANDARD )
+	include_directories(external/glm-0.9.7.1/)
+endif()
 
 
 set(GLEW_LIBRARY "$ENV{GLEW_LIBRARY}" CACHE STRING "Path for glew library.")

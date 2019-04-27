@@ -24,8 +24,8 @@
 
 #define GLM_META_PROG_HELPERS
 #include <glm/glm.hpp>
-#include <glm/detail/type_vec.hpp>
-#include <glm/detail/precision.hpp>
+//#include <glm/detail/type_vec.hpp>
+//#include <glm/detail/precision.hpp>
 #include <glm/gtx/transform.hpp> // after <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
