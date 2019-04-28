@@ -5,8 +5,8 @@
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
-#include <glm/detail/type_vec.hpp>
-#include <glm/detail/precision.hpp>
+//#include <glm/detail/type_vec.hpp>
+//#include <glm/detail/precision.hpp>
 
 #include "VBO.hpp"
 #include "VAO.hpp"

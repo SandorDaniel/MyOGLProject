@@ -10,7 +10,7 @@
 #include <GL/glew.h>
 
 #include <glm/glm.hpp>
-#include <glm/detail/precision.hpp>
+//#include <glm/detail/precision.hpp>
 
 
 #include "Aspects.hpp"

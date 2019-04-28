@@ -8,8 +8,8 @@
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
-#include <glm/detail/type_vec.hpp>
-#include <glm/detail/precision.hpp>
+//#include <glm/detail/type_vec.hpp>
+//#include <glm/detail/precision.hpp>
 #include <glm/gtx/transform.hpp> // after <glm/glm.hpp>
 
 #include <common/objloader.hpp>
@@ -169,8 +169,8 @@ void App::init()
 
 	// Create and compile our GLSL program from the shaders
 	m_program_nor_matlight_shadow_mapped_id = LoadShaders(
-		std::vector<const char*>{"SimpleVertexShader.vertexshader"},
-		std::vector<const char*>{"SimpleFragmentShader.fragmentshader"});
+		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/SimpleVertexShader.vertexshader"},
+		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/SimpleFragmentShader.fragmentshader"});
 
 	// Get a handle for our uniform variables
 	// Only during the initialisation
@@ -193,8 +193,8 @@ void App::init()
 	#pragma region Shadow And FBO
 
 	m_program_shadow_id = LoadShaders(
-		std::vector<const char*>{"ShadowVertexShader.vertexshader"},
-		std::vector<const char*>{"ShadowFragmentShader.fragmentshader"});
+		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/ShadowVertexShader.vertexshader"},
+		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/ShadowFragmentShader.fragmentshader"});
 
 	m_shadow_M_shadow_id = glGetUniformLocation(m_program_shadow_id, "M");
 	m_shadow_V_shadow_id = glGetUniformLocation(m_program_shadow_id, "V");
