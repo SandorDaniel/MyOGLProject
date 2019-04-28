@@ -35,7 +35,7 @@ void App::init()
 	std::vector<glm::vec2> original_v_tex_cilinder{};
 
 	bool res = loadOBJ(
-		"../tutorial13_normal_mapping/cylinder.obj", 
+		"cylinder.obj", 
 		original_v_pos_cilinder, 
 		original_v_tex_cilinder, 
 		original_v_nor_cilinder);
@@ -99,13 +99,13 @@ void App::init()
 		v_btg_plane);
 
 	DDSInRAM dds_image_matdiff_wall;
-	dds_image_matdiff_wall.load("../tutorial13_normal_mapping/diffuse.DDS");
+	dds_image_matdiff_wall.load("diffuse.DDS");
 
 	DDSInRAM dds_image_matspec_wall;
-	dds_image_matspec_wall.load("../tutorial13_normal_mapping/specular.DDS");
+	dds_image_matspec_wall.load("specular.DDS");
 
 	BMPInRAM bmp_image_nor_wall;
-	bmp_image_nor_wall.load("../tutorial13_normal_mapping/normal.bmp");
+	bmp_image_nor_wall.load("normal.bmp");
 
 	#pragma endregion
 
