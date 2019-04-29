@@ -82,6 +82,12 @@ class App final
 	glm::mat4 SV;
 	glm::mat4 SP;
 
+	VAO m_vao_test_plane;
+	GLint m_program_test_id;
+	GLint m_M_test_id;
+	GLint m_V_test_id;
+	GLint m_P_test_id;
+
 public:
 
 	App(GLFWwindow* window) : window(window)

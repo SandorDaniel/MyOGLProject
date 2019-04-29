@@ -188,6 +188,24 @@ void App::init()
 	m_shadow_P_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "shadow_P");
 	m_cam_pos_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "cam_pos");
 
+
+
+	m_vao_test_plane.attach(m_vbo_pos_plane);
+	m_vao_test_plane.attach(m_ibo_plane);
+
+	// Create and compile our GLSL program from the shaders
+	m_program_test_id = LoadShaders(
+		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/VS.vertexshader"},
+		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/FS.fragmentshader"});
+
+	// Get a handle for our uniform variables
+	// Only during the initialisation
+	m_M_test_id = glGetUniformLocation(m_program_test_id, "M");
+	m_V_test_id = glGetUniformLocation(m_program_test_id, "V");
+	m_P_test_id = glGetUniformLocation(m_program_test_id, "P");
+
+
+
 	#pragma endregion
 
 	#pragma region Shadow And FBO
@@ -495,13 +513,13 @@ void App::render()
 	//// Draw the triangle !
 	//glDrawArrays(GL_TRIANGLES, 0, m_vbo_pos.getElementCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
 
-	// Draw the triangles !
-	glDrawElements(
-		GL_TRIANGLES,                        // mode
-		m_ibo_cilinder.getElementCount(),    // count
-		GL_UNSIGNED_SHORT,                   // type of indices
-		(void*)0                             // element array buffer offset
-	);
+	//// Draw the triangles !
+	//glDrawElements(
+	//	GL_TRIANGLES,                        // mode
+	//	m_ibo_cilinder.getElementCount(),    // count
+	//	GL_UNSIGNED_SHORT,                   // type of indices
+	//	(void*)0                             // element array buffer offset
+	//);
 
 	glUniform1i(m_does_model_transformation_contain_nonuniform_scaling_nor_matlight_shadow_mapped_id, m_does_m_M_vertical_cilinder_contain_nonuniform_scaling_horizontal_cilinder ? 1 : 0); // DSA version: glProgramUniform1i(m_programID, m_does_model_transformation_contain_nonuniform_scalingID, m_does_m_M2_contain_nonuniform_scaling ? 1 : 0);
 	glUniformMatrix4fv(m_M_nor_matlight_shadow_mapped_id, 1, GL_FALSE, &m_M_vertical_cilinder[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_MID, 1, GL_FALSE, &m_M2[0][0]);
@@ -509,13 +527,13 @@ void App::render()
 	//// Draw the triangle !
 	//glDrawArrays(GL_TRIANGLES, 0, m_vbo_pos.getElementCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
 
-	// Draw the triangles !
-	glDrawElements(
-		GL_TRIANGLES,                        // mode
-		m_ibo_cilinder.getElementCount(),    // count
-		GL_UNSIGNED_SHORT,                   // type of indices
-		(void*)0                             // element array buffer offset
-	);
+	//// Draw the triangles !
+	//glDrawElements(
+	//	GL_TRIANGLES,                        // mode
+	//	m_ibo_cilinder.getElementCount(),    // count
+	//	GL_UNSIGNED_SHORT,                   // type of indices
+	//	(void*)0                             // element array buffer offset
+	//);
 
 	m_vao_cilinder.unBind();
 
@@ -524,17 +542,39 @@ void App::render()
 	glUniform1i(m_does_model_transformation_contain_nonuniform_scaling_nor_matlight_shadow_mapped_id, m_does_m_M_horizontal_plane_contain_nonuniform_scaling ? 1 : 0); // DSA version: glProgramUniform1i(m_programID, m_does_model_transformation_contain_nonuniform_scalingID, m_does_m_M2_contain_nonuniform_scaling ? 1 : 0);
 	glUniformMatrix4fv(m_M_nor_matlight_shadow_mapped_id, 1, GL_FALSE, &m_M_horizontal_plane[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_MID, 1, GL_FALSE, &m_M[0][0]);
 
-	// Draw the triangles !
-	glDrawElements(
-		GL_TRIANGLES,                     // mode
-		m_ibo_plane.getElementCount(),    // count
-		GL_UNSIGNED_SHORT,                // type of indices
-		(void*)0                          // element array buffer offset
-	);
+	//// Draw the triangles !
+	//glDrawElements(
+	//	GL_TRIANGLES,                     // mode
+	//	m_ibo_plane.getElementCount(),    // count
+	//	GL_UNSIGNED_SHORT,                // type of indices
+	//	(void*)0                          // element array buffer offset
+	//);
 
 	glUniform1i(m_does_model_transformation_contain_nonuniform_scaling_nor_matlight_shadow_mapped_id, m_does_m_M_horizontal_plane_contain_nonuniform_scaling ? 1 : 0); // DSA version: glProgramUniform1i(m_programID, m_does_model_transformation_contain_nonuniform_scalingID, m_does_m_M2_contain_nonuniform_scaling ? 1 : 0);
 	glUniformMatrix4fv(m_M_nor_matlight_shadow_mapped_id, 1, GL_FALSE, &m_M_vertical_plane[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_MID, 1, GL_FALSE, &m_M2[0][0]);
 
+	//// Draw the triangles !
+	//glDrawElements(
+	//	GL_TRIANGLES,                     // mode
+	//	m_ibo_plane.getElementCount(),    // count
+	//	GL_UNSIGNED_SHORT,                // type of indices
+	//	(void*)0                          // element array buffer offset
+	//);
+
+	m_vao_plane.unBind();
+
+
+
+
+
+	glUseProgram(m_program_test_id);
+	
+	m_vao_test_plane.bind();
+
+	glUniformMatrix4fv(m_M_test_id, 1, GL_FALSE, &m_M_horizontal_plane[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_MID, 1, GL_FALSE, &m_M[0][0]);
+	glUniformMatrix4fv(m_V_test_id, 1, GL_FALSE, &V[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_VID, 1, GL_FALSE, &V[0][0]);
+	glUniformMatrix4fv(m_P_test_id, 1, GL_FALSE, &P[0][0]);
+
 	// Draw the triangles !
 	glDrawElements(
 		GL_TRIANGLES,                     // mode
@@ -543,7 +583,21 @@ void App::render()
 		(void*)0                          // element array buffer offset
 	);
 
-	m_vao_plane.unBind();
+	glUniformMatrix4fv(m_M_test_id, 1, GL_FALSE, &m_M_vertical_plane[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_MID, 1, GL_FALSE, &m_M2[0][0]);
+
+	// Draw the triangles !
+	glDrawElements(
+		GL_TRIANGLES,                     // mode
+		m_ibo_plane.getElementCount(),    // count
+		GL_UNSIGNED_SHORT,                // type of indices
+		(void*)0                          // element array buffer offset
+	);
+
+	m_vao_test_plane.unBind();
+
+
+
+
 
 	m_tex_matdiff_wall.unBind();
 	m_tex_matspec_wall.unBind();

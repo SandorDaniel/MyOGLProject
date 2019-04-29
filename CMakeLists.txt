@@ -107,6 +107,8 @@ add_executable(
 	playground/ShadowVertexShader.vertexshader
 	playground/SimpleFragmentShader.fragmentshader
 	playground/SimpleVertexShader.vertexshader
+	playground/FS.fragmentshader
+	playground/VS.vertexshader
 )
 target_link_libraries(playground
 	${ALL_LIBS}
