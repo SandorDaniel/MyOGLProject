@@ -23,14 +23,8 @@ set(GLM_INCLUDE_DIR "$ENV{GLM_INCLUDE_DIR}" CACHE STRING "Path for GLM headers."
 include_directories(
 	"${GLEW_INCLUDE_DIR}"
 	"${GLFW_INCLUDE_DIR}"
+	"${GLM_INCLUDE_DIR}"
 	.)
-	
-option(IS_GLM_STANDARD "Wether GLM is standrad or our fake one." OFF)
-if( IS_GLM_STANDARD )
-	include_directories("${GLM_INCLUDE_DIR}")
-else( IS_GLM_STANDARD )
-	include_directories(external/glm-0.9.7.1/)
-endif()
 
 
 set(GLEW_LIBRARY "$ENV{GLEW_LIBRARY}" CACHE STRING "Path for glew library.")
@@ -107,8 +101,6 @@ add_executable(
 	playground/ShadowVertexShader.vertexshader
 	playground/SimpleFragmentShader.fragmentshader
 	playground/SimpleVertexShader.vertexshader
-	playground/FS.fragmentshader
-	playground/VS.vertexshader
 )
 target_link_libraries(playground
 	${ALL_LIBS}
