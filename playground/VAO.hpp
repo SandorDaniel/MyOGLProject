@@ -46,9 +46,9 @@ class VAO final
 		}
 
 		template<
-			template<typename, glm::precision> class TVec,
+			template<int, typename, glm::qualifier> class TVec,
 			typename CoordType,
-			glm::precision precision,
+			glm::qualifier precision,
 			const int COORD_COUNT>
 		void attach(const VBO<TVec, CoordType, precision, COORD_COUNT>& AspFreeVBO);
 		template<
@@ -93,9 +93,9 @@ public:
 	}
 
 	template<
-		template<typename, glm::precision> class TVec,
+		template<int, typename, glm::qualifier> class TVec,
 		typename CoordType,
-		glm::precision precision,
+		glm::qualifier precision,
 		const int COORD_COUNT>
 	void attach(const VBO<TVec, CoordType, precision, COORD_COUNT>& AspFreeVBO)
 	{
@@ -122,9 +122,9 @@ public:
 
 
 template<
-	template<typename, glm::precision> class TVec,
+	template<int, typename, glm::qualifier> class TVec,
 	typename CoordType,
-	glm::precision precision,
+	glm::qualifier precision,
 	const int COORD_COUNT>
 void VAO::AspFreeVAO::attach(const VBO<TVec, CoordType, precision, COORD_COUNT>& AspFreeVBO)
 {

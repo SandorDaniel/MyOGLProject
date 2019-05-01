@@ -18,9 +18,9 @@
 
 
 template<
-	template<typename, glm::precision> class TVec,
+	template<int, typename, glm::qualifier> class TVec,
 	typename CoordType,
-	glm::precision precision,
+	glm::qualifier precision,
 	const int COORD_COUNT>
 class VBO final
 {
@@ -67,7 +67,7 @@ class VBO final
 			return m_vbo_id;
 		}
 
-		void load(const std::vector<TVec<CoordType, precision>>& g_vertex_buffer_data);
+		void load(const std::vector<TVec<COORD_COUNT, CoordType, precision>>& g_vertex_buffer_data);
 
 		GLsizei getElementCount() const
 		{
@@ -117,9 +117,9 @@ public:
 		return (m_loading.checkOn(static_cast<std::function<GLuint(const VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO&)>>(&VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO::operator GLuint)))(m_vbo);
 	}
 
-	void load(const std::vector<TVec<CoordType, precision>>& g_vertex_buffer_data)
+	void load(const std::vector<TVec<COORD_COUNT, CoordType, precision>>& g_vertex_buffer_data)
 	{
-		return (m_loading.turnOn(static_cast<std::function<void(VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO&, const std::vector<TVec<CoordType, precision>>&)>>(&VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO::load)))(m_vbo, g_vertex_buffer_data);
+		return (m_loading.turnOn(static_cast<std::function<void(VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO&, const std::vector<TVec<COORD_COUNT, CoordType, precision>>&)>>(&VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO::load)))(m_vbo, g_vertex_buffer_data);
 	}
 
 	GLsizei getElementCount() const
@@ -130,7 +130,7 @@ public:
 };
 
 
-template<template<typename, glm::precision> class TVec, typename CoordType, glm::precision precision, const int COORD_COUNT>
+template<template<int, typename, glm::qualifier> class TVec, typename CoordType, glm::qualifier precision, const int COORD_COUNT>
 VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO::AspFreeVBO()
 {
 	glGenBuffers(1, &m_vbo_id);
@@ -148,7 +148,7 @@ VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO::AspFreeVBO()
 }
 
 
-template<template<typename, glm::precision> class TVec, typename CoordType, glm::precision precision, const int COORD_COUNT>
+template<template<int, typename, glm::qualifier> class TVec, typename CoordType, glm::qualifier precision, const int COORD_COUNT>
 VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO::AspFreeVBO(VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO&& vbo) :
 	m_vbo_id(vbo.m_vbo_id),
 	m_element_count_of_vertexbuffer(vbo.m_element_count_of_vertexbuffer)
@@ -158,18 +158,18 @@ VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO::AspFreeVBO(VBO<TVec, C
 }
 
 
-template<template<typename, glm::precision> class TVec, typename CoordType, glm::precision precision, const int COORD_COUNT>
-void VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO::load(const std::vector<TVec<CoordType, precision>>& g_vertex_buffer_data)
+template<template<int, typename, glm::qualifier> class TVec, typename CoordType, glm::qualifier precision, const int COORD_COUNT>
+void VBO<TVec, CoordType, precision, COORD_COUNT>::AspFreeVBO::load(const std::vector<TVec<COORD_COUNT, CoordType, precision>>& g_vertex_buffer_data)
 {
 	m_element_count_of_vertexbuffer = static_cast<GLsizei>(g_vertex_buffer_data.size() <= 2147483647 ? 
 		g_vertex_buffer_data.size() : 
 		throw std::domain_error("VBO.hpp: buffer element count is to big to be represented as a GLsizei"));
 
-	glNamedBufferData(m_vbo_id, m_element_count_of_vertexbuffer * sizeof(TVec<CoordType, precision>), &g_vertex_buffer_data[0], GL_STATIC_DRAW);
+	glNamedBufferData(m_vbo_id, m_element_count_of_vertexbuffer * sizeof(TVec<COORD_COUNT, CoordType, precision>), &g_vertex_buffer_data[0], GL_STATIC_DRAW);
 }
 
 
-template<template<typename, glm::precision> class TVec, typename CoordType, glm::precision precision, const int COORD_COUNT>
+template<template<int, typename, glm::qualifier> class TVec, typename CoordType, glm::qualifier precision, const int COORD_COUNT>
 VBO<TVec, CoordType, precision, COORD_COUNT>& VBO<TVec, CoordType, precision, COORD_COUNT>::operator=(VBO<TVec, CoordType, precision, COORD_COUNT>&& vbo)
 {
 	VBO<TVec, CoordType, precision, COORD_COUNT> temp_vbo((std::move(vbo)));

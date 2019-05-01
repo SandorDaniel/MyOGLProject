@@ -24,18 +24,18 @@ class App final
 	GLFWwindow* window = nullptr; // TODO: rename it properly
 
 	VAO m_vao_cilinder;
-	VBO<glm::tvec3, float, glm::highp, 3> m_vbo_pos_cilinder;
-	//VBO<glm::tvec3, float, glm::highp, 3> m_vbo_nor;
-	VBO<glm::tvec2, float, glm::highp, 2> m_vbo_tex_cilinder;
-	VBO<glm::tvec3, float, glm::highp, 3> m_vbo_tg_cilinder;
-	VBO<glm::tvec3, float, glm::highp, 3> m_vbo_btg_cilinder;
+	VBO<glm::vec, float, glm::qualifier::defaultp, 3> m_vbo_pos_cilinder;
+	//VBO<glm::vec, float, glm::qualifier::defaultp, 3> m_vbo_nor;
+	VBO<glm::vec, float, glm::qualifier::defaultp, 2> m_vbo_tex_cilinder;
+	VBO<glm::vec, float, glm::qualifier::defaultp, 3> m_vbo_tg_cilinder;
+	VBO<glm::vec, float, glm::qualifier::defaultp, 3> m_vbo_btg_cilinder;
 	IBO<GLushort> m_ibo_cilinder;
 
 	VAO m_vao_plane;
-	VBO<glm::tvec3, float, glm::highp, 3> m_vbo_pos_plane;
-	VBO<glm::tvec2, float, glm::highp, 2> m_vbo_tex_plane;
-	VBO<glm::tvec3, float, glm::highp, 3> m_vbo_tg_plane;
-	VBO<glm::tvec3, float, glm::highp, 3> m_vbo_btg_plane;
+	VBO<glm::vec, float, glm::qualifier::defaultp, 3> m_vbo_pos_plane;
+	VBO<glm::vec, float, glm::qualifier::defaultp, 2> m_vbo_tex_plane;
+	VBO<glm::vec, float, glm::qualifier::defaultp, 3> m_vbo_tg_plane;
+	VBO<glm::vec, float, glm::qualifier::defaultp, 3> m_vbo_btg_plane;
 	IBO<GLushort> m_ibo_plane;
 	
 	TEX<ColorTexData> m_tex_matdiff_wall;
