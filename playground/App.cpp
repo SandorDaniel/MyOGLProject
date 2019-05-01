@@ -95,7 +95,7 @@ void App::upDate()
 
 	//M = T * R * S;
 
-	m_M_vertical_plane = glm::mat4(0.0f);
+	m_M_vertical_plane = glm::mat4(1.0f);
 		//glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -2.0f));
 
 	m_M_horizontal_plane =
