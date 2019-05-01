@@ -46,11 +46,9 @@ class VAO final
 		}
 
 		template<
-			template<typename, glm::precision> class TVec,
-			typename CoordType,
-			glm::precision precision,
+			typename vec_n,
 			const int COORD_COUNT>
-		void attach(const VBO<TVec, CoordType, precision, COORD_COUNT>& AspFreeVBO);
+		void attach(const VBO<vec_n, COORD_COUNT>& AspFreeVBO);
 		template<
 			typename ElementType>
 		void attach(const IBO<ElementType>& AspFreeIBO);
@@ -93,13 +91,11 @@ public:
 	}
 
 	template<
-		template<typename, glm::precision> class TVec,
-		typename CoordType,
-		glm::precision precision,
+		typename vec_n,
 		const int COORD_COUNT>
-	void attach(const VBO<TVec, CoordType, precision, COORD_COUNT>& AspFreeVBO)
+	void attach(const VBO<vec_n, COORD_COUNT>& AspFreeVBO)
 	{
-		return (m_attaching.turnOn(static_cast<std::function<void(AspFreeVAO&, const VBO<TVec, CoordType, precision, COORD_COUNT>&)>>(&AspFreeVAO::attach<TVec, CoordType, precision, COORD_COUNT>)))(m_vao, AspFreeVBO);
+		return (m_attaching.turnOn(static_cast<std::function<void(AspFreeVAO&, const VBO<vec_n, COORD_COUNT>&)>>(&AspFreeVAO::attach<vec_n, COORD_COUNT>)))(m_vao, AspFreeVBO);
 	}
 	template<
 		typename ElementType>
@@ -122,11 +118,9 @@ public:
 
 
 template<
-	template<typename, glm::precision> class TVec,
-	typename CoordType,
-	glm::precision precision,
+	typename vec_n,
 	const int COORD_COUNT>
-void VAO::AspFreeVAO::attach(const VBO<TVec, CoordType, precision, COORD_COUNT>& AspFreeVBO)
+void VAO::AspFreeVAO::attach(const VBO<vec_n, COORD_COUNT>& AspFreeVBO)
 {
 	//
 	// Not DSA code
@@ -164,7 +158,7 @@ void VAO::AspFreeVAO::attach(const VBO<TVec, CoordType, precision, COORD_COUNT>&
 		m_channel_number,
 		AspFreeVBO,
 		reinterpret_cast<GLintptr>(nullptr),
-		COORD_COUNT * sizeof(CoordType)
+		COORD_COUNT * sizeof(float)
 	);
 
 	++m_channel_number;

@@ -23,7 +23,7 @@ class App final
 {
 	GLFWwindow* window = nullptr; // TODO: rename it properly
 
-	VBO<glm::tvec3, float, glm::highp, 3> m_vbo_pos_plane;
+	VBO<glm::vec3, 3> m_vbo_pos_plane;
 	IBO<GLushort> m_ibo_plane;
 
 	glm::mat4 m_M_vertical_plane = glm::mat4(); // glm::mat4() is the identity matrix
