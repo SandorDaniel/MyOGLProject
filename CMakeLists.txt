@@ -2,6 +2,8 @@
 cmake_minimum_required (VERSION 3.0)
 project (Tutorials)
 
+# We need OpenGL
+# use cmake feature
 find_package(OpenGL REQUIRED)
 
 
@@ -20,6 +22,7 @@ set(GLEW_INCLUDE_DIR "$ENV{GLEW_INCLUDE_DIR}" CACHE STRING "Path for glew header
 set(GLFW_INCLUDE_DIR "$ENV{GLFW_INCLUDE_DIR}" CACHE STRING "Path for glfw headers.")
 set(GLM_INCLUDE_DIR "$ENV{GLM_INCLUDE_DIR}" CACHE STRING "Path for GLM headers.")
 
+# Add include directories to the build.
 include_directories(
 	"${GLEW_INCLUDE_DIR}"
 	"${GLFW_INCLUDE_DIR}"
@@ -30,6 +33,7 @@ include_directories(
 set(GLEW_LIBRARY "$ENV{GLEW_LIBRARY}" CACHE STRING "Path for glew library.")
 set(GLFW_LIBRARY "$ENV{GLFW_LIBRARY}" CACHE STRING "Path for glfw library.")
 
+# Specify directories in which the linker will look for libraries.
 link_directories(
     ${GLEW_LIBRARY}
     ${GLFW_LIBRARY})
@@ -41,16 +45,22 @@ option(IS_GLEW_STATIC "Linkage of GLEW is either static or dynamic" OFF)
 option(IS_GLFW_STATIC "Linkage of GLFW is either static or dynamic" OFF)
 
 if(IS_GLEW_STATIC)
+	# We need for glew32s.lib for GLEW.
 	list(APPEND ALL_LIBS glew32s)
 	add_definitions(-DGLEW_STATIC)
 else(IS_GLEW_STATIC)
+	# We need for glew32.dll and glew32.lib for GLEW.
+	# The dlls location are already defined on Path.
 	list(APPEND ALL_LIBS glew32)
 	# We assume that glew32.dll is already added to the "Path" environment variable.
 endif()
 
 if(IS_GLFW_STATIC)
+    # We need for glfw3.lib for GLFW.
 	list(APPEND ALL_LIBS glfw3)
 else(IS_GLFW_STATIC)
+	# We need for glfw3.dll  and glfw3dll.lib for GLFW.
+	# The dlls location are already defined on Path.
 	list(APPEND ALL_LIBS glfw3dll)
 	# We assume that glfw3.dll is already added to the "Path" environment variable.
 endif()
