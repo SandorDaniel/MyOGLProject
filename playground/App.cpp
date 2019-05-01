@@ -61,6 +61,9 @@ void App::init()
 		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/VS.vertexshader"},
 		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/FS.fragmentshader"});
 
+	// Get a handle for our uniform variables
+	// Only during the initialisation
+	m_M_test_id = glGetUniformLocation(m_program_test_id, "M");
 
 
 	#pragma endregion
@@ -92,6 +95,13 @@ void App::upDate()
 
 	//M = T * R * S;
 
+	m_M_vertical_plane = glm::mat4(0.0f);
+		//glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -2.0f));
+
+	m_M_horizontal_plane =
+		glm::translate(glm::mat4(), glm::vec3(0.0f, -2.0f, 0.0f)) *
+		glm::rotate(glm::mat4(), glm::radians<float>(-90), glm::vec3(1.0f, 0.0f, 0.0f));
+
 	#pragma endregion
 }
 
@@ -104,8 +114,19 @@ void App::render()
 	
 	m_vao_test_plane.bind();
 
+	glUniformMatrix4fv(m_M_test_id, 1, GL_FALSE, &m_M_horizontal_plane[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_MID, 1, GL_FALSE, &m_M[0][0]);
 	// Draw the triangles !
 	//glDrawArrays(GL_TRIANGLES, 0, m_vbo_pos.getElementCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+	glDrawElements(
+		GL_TRIANGLES,                     // mode
+		m_ibo_plane.getElementCount(),    // count
+		GL_UNSIGNED_SHORT,                // type of indices
+		(void*)0                          // element array buffer offset
+	);
+
+	glUniformMatrix4fv(m_M_test_id, 1, GL_FALSE, &m_M_vertical_plane[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_MID, 1, GL_FALSE, &m_M2[0][0]);
+
+	// Draw the triangles !
 	glDrawElements(
 		GL_TRIANGLES,                     // mode
 		m_ibo_plane.getElementCount(),    // count
