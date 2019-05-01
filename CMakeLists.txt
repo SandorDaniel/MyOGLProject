@@ -50,7 +50,7 @@ endif()
 
 if(IS_GLFW_STATIC)
 	list(APPEND ALL_LIBS glfw3)
-else(IS_GLEW_STATIC)
+else(IS_GLFW_STATIC)
 	list(APPEND ALL_LIBS glfw3dll)
 	# We assume that glfw3.dll is already added to the "Path" environment variable.
 endif()
