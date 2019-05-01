@@ -61,12 +61,6 @@ void App::init()
 		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/VS.vertexshader"},
 		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/FS.fragmentshader"});
 
-	// Get a handle for our uniform variables
-	// Only during the initialisation
-	m_M_test_id = glGetUniformLocation(m_program_test_id, "M");
-	m_V_test_id = glGetUniformLocation(m_program_test_id, "V");
-	m_P_test_id = glGetUniformLocation(m_program_test_id, "P");
-
 
 
 	#pragma endregion
@@ -98,13 +92,6 @@ void App::upDate()
 
 	//M = T * R * S;
 
-	m_M_vertical_plane = glm::mat4();
-		//glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -2.0f));
-
-	m_M_horizontal_plane =
-		glm::translate(glm::mat4(), glm::vec3(0.0f, -2.0f, 0.0f)) *
-		glm::rotate(glm::mat4(), glm::radians<float>(-90), glm::vec3(1.0f, 0.0f, 0.0f));
-
 	#pragma endregion
 }
 
@@ -113,40 +100,12 @@ void App::render()
 {
 	#pragma region standard rendering
 
-	glm::mat4 V = glm::lookAt(
-		glm::vec3(0, 0, 5),           // Camera is here
-		glm::vec3(0, 0, 0), // and looks here : at the same position, plus "direction"
-		glm::vec3(0, 1, 0)                  // Head is up (set to 0,-1,0 to look upside-down)
-	);
-	int win_width, win_height;
-	glfwGetWindowSize(window, &win_width, &win_height);
-	glm::mat4 P = glm::perspective(
-		glm::radians<float>(45.0f),
-		static_cast<float>(win_width) / static_cast<float>(win_height),
-		0.1f, 100.0f);
-	//V = getView(m_camera);
-	//P = getPerspectiveProj(m_camera);
-
 	glUseProgram(m_program_test_id);
 	
 	m_vao_test_plane.bind();
 
-	glUniformMatrix4fv(m_M_test_id, 1, GL_FALSE, &m_M_horizontal_plane[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_MID, 1, GL_FALSE, &m_M[0][0]);
-	glUniformMatrix4fv(m_V_test_id, 1, GL_FALSE, &V[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_VID, 1, GL_FALSE, &V[0][0]);
-	glUniformMatrix4fv(m_P_test_id, 1, GL_FALSE, &P[0][0]);
-
 	// Draw the triangles !
 	//glDrawArrays(GL_TRIANGLES, 0, m_vbo_pos.getElementCount()); // Starting from vertex 0; 3 vertices total -> 1 triangle
-	glDrawElements(
-		GL_TRIANGLES,                     // mode
-		m_ibo_plane.getElementCount(),    // count
-		GL_UNSIGNED_SHORT,                // type of indices
-		(void*)0                          // element array buffer offset
-	);
-
-	glUniformMatrix4fv(m_M_test_id, 1, GL_FALSE, &m_M_vertical_plane[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_MID, 1, GL_FALSE, &m_M2[0][0]);
-
-	// Draw the triangles !
 	glDrawElements(
 		GL_TRIANGLES,                     // mode
 		m_ibo_plane.getElementCount(),    // count
