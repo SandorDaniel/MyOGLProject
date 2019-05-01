@@ -59,14 +59,14 @@ class App final
 	PositionalLight  light_positional;
 	DirectionalLight light_directional;
 
-	glm::mat4 m_M_horizontal_cilinder = glm::mat4(); // glm::mat4() is the identity matrix
+	glm::mat4 m_M_horizontal_cilinder = glm::mat4(1.0f); // glm::mat4(1.0f) is the identity matrix
 	bool m_does_m_M_horizontal_cilinder_contain_nonuniform_scaling_horizontal_cilinder = false;
-	glm::mat4 m_M_vertical_cilinder = glm::mat4();
+	glm::mat4 m_M_vertical_cilinder = glm::mat4(1.0f);
 	bool m_does_m_M_vertical_cilinder_contain_nonuniform_scaling_horizontal_cilinder = false;
 
-	glm::mat4 m_M_vertical_plane = glm::mat4(); // glm::mat4() is the identity matrix
+	glm::mat4 m_M_vertical_plane = glm::mat4(1.0f); // glm::mat4(1.0f) is the identity matrix
 	bool m_does_m_M_vertical_plane_contain_nonuniform_scaling = false;
-	glm::mat4 m_M_horizontal_plane = glm::mat4();
+	glm::mat4 m_M_horizontal_plane = glm::mat4(1.0f);
 	bool m_does_m_M_horizontal_plane_contain_nonuniform_scaling = false;
 
 	InPutObserverCamera m_camera;

@@ -227,29 +227,29 @@ void App::upDate()
 
 	#pragma region MODEL-TRANSFORMATIONS UpDate
 
-	//glm::mat4 S = glm::scale(glm::mat4(), glm::vec3(2.0f, 1.0f, 1.0f));
-	//glm::mat4 R = glm::rotate(glm::mat4(), glm::radians<float>(45), glm::vec3(0.0f, 0.0f, 1.0f));
-	//glm::mat4 T = glm::translate(glm::mat4(), glm::vec3(2.0f, 2.0f, 0.0f));
+	//glm::mat4 S = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 1.0f, 1.0f));
+	//glm::mat4 R = glm::rotate(glm::mat4(1.0f), glm::radians<float>(45), glm::vec3(0.0f, 0.0f, 1.0f));
+	//glm::mat4 T = glm::translate(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 0.0f));
 
 	//M = T * R * S;
 	
 	m_M_horizontal_cilinder = 
-		glm::rotate(glm::mat4(), glm::radians<float>(-90), glm::vec3(0.0f, 0.0f, 1.0f));
+		glm::rotate(glm::mat4(1.0f), glm::radians<float>(-90), glm::vec3(0.0f, 0.0f, 1.0f));
 	m_does_m_M_horizontal_cilinder_contain_nonuniform_scaling_horizontal_cilinder = false;
 
 	m_M_vertical_cilinder = 
-		glm::scale(glm::mat4(), glm::vec3(0.5f, 1.0f, 0.5f)) * 
-		glm::translate(glm::mat4(), glm::vec3(3.0f, 0.0f, 0.0f)) *
-		glm::rotate(glm::mat4(), glm::radians<float>(-180), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 1.0f, 0.5f)) * 
+		glm::translate(glm::mat4(1.0f), glm::vec3(3.0f, 0.0f, 0.0f)) *
+		glm::rotate(glm::mat4(1.0f), glm::radians<float>(-180), glm::vec3(0.0f, 1.0f, 0.0f));
 	m_does_m_M_vertical_cilinder_contain_nonuniform_scaling_horizontal_cilinder = true;
 
 	m_M_vertical_plane =
-		glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, -2.0f));
+		glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f));
 	m_does_m_M_vertical_plane_contain_nonuniform_scaling = false;
 
 	m_M_horizontal_plane =
-		glm::translate(glm::mat4(), glm::vec3(0.0f, -2.0f, 0.0f)) *
-		glm::rotate(glm::mat4(), glm::radians<float>(-90), glm::vec3(1.0f, 0.0f, 0.0f));
+		glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -2.0f, 0.0f)) *
+		glm::rotate(glm::mat4(1.0f), glm::radians<float>(-90), glm::vec3(1.0f, 0.0f, 0.0f));
 	m_does_m_M_horizontal_plane_contain_nonuniform_scaling = false;
 
 	#pragma endregion
