@@ -1,6 +1,10 @@
 # CMake entry point
 cmake_minimum_required (VERSION 3.0)
-project (Tutorials)
+project(
+	Tutorials
+	VERSION 1.0
+	DESCRIPTION "This is an OGL project..."
+	LANGUAGES CXX)
 
 # We need OpenGL
 # use cmake feature
@@ -23,11 +27,11 @@ set(GLFW_INCLUDE_DIR "$ENV{GLFW_INCLUDE_DIR}" CACHE STRING "Path for glfw header
 set(GLM_INCLUDE_DIR "$ENV{GLM_INCLUDE_DIR}" CACHE STRING "Path for GLM headers.")
 
 # Add include directories to the build.
-include_directories(
-	"${GLEW_INCLUDE_DIR}"
-	"${GLFW_INCLUDE_DIR}"
-	"${GLM_INCLUDE_DIR}"
-	.)
+# include_directories(
+	# "${GLEW_INCLUDE_DIR}"
+	# "${GLFW_INCLUDE_DIR}"
+	# "${GLM_INCLUDE_DIR}"
+	# .)
 
 
 set(GLEW_LIBRARY "$ENV{GLEW_LIBRARY}" CACHE STRING "Path for glew library.")
@@ -66,7 +70,10 @@ else(IS_GLFW_STATIC)
 endif()
 
 
-# User playground
+# We can add (add_executable) executables and libraries (add_library).
+# Added libraies and executables are called targets.
+# You can add libraries either as static or dynamic libraries. (eg.: add_library(MyStaticLibrary STATIC printGoodBye.cxx printGoodBye.hxx))
+# You can add include directories to the target library. (eg.: target_include_directories(MyStaticLibrary PUBLIC "F:/Users/DELL/Documents/CMake_by_Example/Source/Libraries/StaticLibraries/MyStaticLibrary/Includes"))
 add_executable(
 	playground 
 	playground/App.cpp
@@ -115,6 +122,15 @@ add_executable(
 target_link_libraries(playground
 	${ALL_LIBS}
 )
+target_include_directories(
+    playground
+	PUBLIC
+	"${GLEW_INCLUDE_DIR}"
+	"${GLFW_INCLUDE_DIR}"
+	"${GLM_INCLUDE_DIR}"
+	.)
+
+target_compile_features(playground PUBLIC cxx_std_11)
 
 
 SOURCE_GROUP(Common REGULAR_EXPRESSION ".*/common/.*" )
