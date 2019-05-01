@@ -1,3 +1,5 @@
+// TODO: !!!!Change "F:/Users/DELL/Documents/MyOGLProject/playground/..." paths to relative paths or make them be part of the source files somehow!!!!
+
 // TODO: write or own vbo indexer as a variadic function template (there will be input parameters for comparing, and input parameters only for copying)
 // TODO: https://www.opengl.org/archives/resources/features/KilgardTechniques/oglpitfall/
 // TODO: https://www.khronos.org/opengl/wiki/Common_Mistakes
