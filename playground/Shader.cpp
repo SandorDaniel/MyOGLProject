@@ -26,31 +26,14 @@ GLuint LoadShaders(std::vector<const char*> v_vertex_file_path, std::vector<cons
 	std::string VertexShaderCode{};
 	for (const auto& vertex_file_path : v_vertex_file_path)
 	{
-		std::ifstream VertexShaderStream(vertex_file_path, std::ios::in);
-		if (VertexShaderStream.is_open()) {
-			std::stringstream sstr;
-			sstr << VertexShaderStream.rdbuf();
-			VertexShaderCode += sstr.str();
-			VertexShaderStream.close();
-		}
-		else {
-			std::cout << "Impossible to open " << vertex_file_path << ". Are you in the right directory? Don't forget to read the FAQ!" << std::endl;
-			getchar();
-			return 0;
-		}
+		VertexShaderCode += vertex_file_path;
 	}
 
 	// Read the Fragment Shader code from the file
 	std::string FragmentShaderCode{};
 	for (const auto& fragment_file_path : v_fragment_file_path)
 	{
-		std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
-		if (FragmentShaderStream.is_open()) {
-			std::stringstream sstr;
-			sstr << FragmentShaderStream.rdbuf();
-			FragmentShaderCode = sstr.str();
-			FragmentShaderStream.close();
-		}
+		FragmentShaderCode += fragment_file_path;
 	}
 
 	GLint Result = GL_FALSE;

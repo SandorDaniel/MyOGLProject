@@ -1,3 +1,4 @@
+R"(
 #version 330 core
 
 
@@ -50,3 +51,4 @@ void main()
 
 	out_vert_shadow = biasMatrix * shadow_P * shadow_V * M * vec4(in_vert_pos, 1.0f);
 }
+)"

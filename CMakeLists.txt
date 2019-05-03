@@ -143,7 +143,7 @@ configure_file("tutorial13_normal_mapping/specular.DDS.in" "specular.DDS" COPYON
 configure_file("tutorial13_normal_mapping/normal.bmp.in" "normal.bmp" COPYONLY)
 
 
-set(INSTALL_DIR "C:/Users/DELL/Desktop/Install" CACHE STRING "Path for installation directory.")
+set(INSTALL_DIR "${CMAKE_BINARY_DIR}/Install" CACHE STRING "Path for installation directory.")
 
 configure_file("tutorial13_normal_mapping/cylinder.obj.in" "${INSTALL_DIR}/cylinder.obj" COPYONLY)
 configure_file("tutorial13_normal_mapping/diffuse.DDS.in"  "${INSTALL_DIR}/diffuse.DDS" COPYONLY)

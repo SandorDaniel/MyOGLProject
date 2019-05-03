@@ -1,3 +1,4 @@
+R"(
 // TODO: Testing specular color on a spehere
 // TODO: Testing inhomogeneous material
 // TODO: uniformization of light datas, CPU-side Light class
@@ -283,3 +284,4 @@ void main()
 
 	col = vec4(color, 1.0f);
 }
+)"

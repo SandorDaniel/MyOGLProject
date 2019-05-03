@@ -168,9 +168,15 @@ void App::init()
 	#pragma region GPU-Side-Program SetUp (loading and compiling sahders, setting up uniform variables)
 
 	// Create and compile our GLSL program from the shaders
+	const char* vs =
+	#include "SimpleVertexShader.vertexshader"
+		;
+	const char* fs =
+	#include "SimpleFragmentShader.fragmentshader"
+		;
 	m_program_nor_matlight_shadow_mapped_id = LoadShaders(
-		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/SimpleVertexShader.vertexshader"},
-		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/SimpleFragmentShader.fragmentshader"});
+		std::vector<const char*>{vs},
+		std::vector<const char*>{fs});
 
 	// Get a handle for our uniform variables
 	// Only during the initialisation
@@ -192,9 +198,15 @@ void App::init()
 
 	#pragma region Shadow And FBO
 
+	vs = 
+	#include "ShadowVertexShader.vertexshader"
+	;
+	fs =
+	#include "ShadowVertexShader.vertexshader"
+	;
 	m_program_shadow_id = LoadShaders(
-		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/ShadowVertexShader.vertexshader"},
-		std::vector<const char*>{"F:/Users/DELL/Documents/MyOGLProject/playground/ShadowFragmentShader.fragmentshader"});
+		std::vector<const char*>{vs},
+		std::vector<const char*>{fs});
 
 	m_shadow_M_shadow_id = glGetUniformLocation(m_program_shadow_id, "M");
 	m_shadow_V_shadow_id = glGetUniformLocation(m_program_shadow_id, "V");
