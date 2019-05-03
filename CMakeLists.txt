@@ -7,7 +7,7 @@ project(
 
 # We need OpenGL
 # use cmake feature
-find_package(OpenGL REQUIRED)
+find_package(OPENGL_gl_LIBRARY REQUIRED)
 
 
 if( CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR )
