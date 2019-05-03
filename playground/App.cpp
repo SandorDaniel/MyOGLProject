@@ -202,7 +202,7 @@ void App::init()
 	#include "ShadowVertexShader.vertexshader"
 	;
 	fs =
-	#include "ShadowVertexShader.vertexshader"
+	#include "ShadowFragmentShader.fragmentshader"
 	;
 	m_program_shadow_id = LoadShaders(
 		std::vector<const char*>{vs},
