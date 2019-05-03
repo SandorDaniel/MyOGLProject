@@ -1,5 +1,5 @@
 # CMake entry point
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.6.2)
 project(
 	Tutorials
 	VERSION 1.0
