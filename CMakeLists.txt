@@ -2,7 +2,6 @@
 cmake_minimum_required (VERSION 2.0)
 project(
 	Tutorials
-	VERSION 1.0
 	DESCRIPTION "This is an OGL project..."
 	LANGUAGES CXX)
 
