@@ -39,17 +39,17 @@
 // - implement detach member function where attach member functions are implemented
 // - making unBind member functions to rebind the OGL object that was bound before invocation of the bind member function
 
-#define sd_debugger
-#include "Debug.h"
+//#define sd_debugger
+//#include "Debug.h"
 
-#include <iostream>
-#include <cstdlib>
-#include <cstring>
+//#include <iostream>
+//#include <cstdlib>
+//#include <cstring>
 
 #include <GL/glew.h>
 
 #ifdef _WIN32
-#include <windows.h>
+//#include <windows.h>
 #include "wglext.h" // TODO...
 #endif
 
