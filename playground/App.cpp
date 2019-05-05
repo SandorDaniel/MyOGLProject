@@ -197,12 +197,12 @@ void App::init()
 	m_tex_matdiff_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "tex_matdiff_sampler");
 	m_tex_matspec_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "tex_matspec_sampler");
 	m_tex_norm_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "tex_norm_sampler");
-	m_tex_shadow_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "shadowMap");
+	m_tex_positional_light_shadow_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "positional_light_shadow_map");
 	m_does_model_transformation_contain_nonuniform_scaling_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "is_model_nonuniform_scaled");
 	PositionalLight::getUniformLocationsForAll(m_program_nor_matlight_shadow_mapped_id);
 	DirectionalLight::getUniformLocationsForAll(m_program_nor_matlight_shadow_mapped_id);
-	m_shadow_V_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "shadow_V");
-	m_shadow_P_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "shadow_P");
+	m_positional_light_shadow_V_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "positional_light_shadow_V");
+	m_positional_light_shadow_P_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "positional_light_shadow_P");
 	m_cam_pos_nor_matlight_shadow_mapped_id = glGetUniformLocation(m_program_nor_matlight_shadow_mapped_id, "cam_pos");
 
 	#pragma endregion
@@ -223,13 +223,13 @@ void App::init()
 	m_shadow_V_shadow_id = glGetUniformLocation(m_program_shadow_id, "V");
 	m_shadow_P_shadow_id = glGetUniformLocation(m_program_shadow_id, "P");
 
-	m_tex_depth.resize(PositionalLight::lights.size());
-	SV.resize(PositionalLight::lights.size());
-	SP.resize(PositionalLight::lights.size());
+	m_tex_depth_positional_light.resize(PositionalLight::lights.size());
+	positional_light_V.resize(PositionalLight::lights.size());
+	positional_light_P.resize(PositionalLight::lights.size());
 	
 	for (int i = 0; i < PositionalLight::lights.size(); ++i)
 	{
-		m_tex_depth[i].alloc(1024, 1024);
+		m_tex_depth_positional_light[i].alloc(1024, 1024);
 	}
 
 	#pragma endregion
@@ -410,7 +410,7 @@ void App::render()
 
 	for (int k = 0; k < PositionalLight::lights.size(); ++k)
 	{
-		fbo.attach(m_tex_depth[k]);
+		fbo.attach(m_tex_depth_positional_light[k]);
 		fbo.bind();
 
 		// shadow of positional light
@@ -445,14 +445,14 @@ void App::render()
 			cam.setNear(1.0f);
 			cam.setFar(thickness);
 
-			SV[k] = getView(cam);
-			SP[k] = getPerspectiveProj(cam);
+			positional_light_V[k] = getView(cam);
+			positional_light_P[k] = getPerspectiveProj(cam);
 		}
 
 		m_vao_cilinder.bind();
 
-		glUniformMatrix4fv(m_shadow_V_shadow_id, 1, GL_FALSE, &SV[k][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_VID, 1, GL_FALSE, &V[0][0]);
-		glUniformMatrix4fv(m_shadow_P_shadow_id, 1, GL_FALSE, &SP[k][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
+		glUniformMatrix4fv(m_shadow_V_shadow_id, 1, GL_FALSE, &positional_light_V[k][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_VID, 1, GL_FALSE, &V[0][0]);
+		glUniformMatrix4fv(m_shadow_P_shadow_id, 1, GL_FALSE, &positional_light_P[k][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
 
 		glUniform1i(m_does_model_transformation_contain_nonuniform_scaling_nor_matlight_shadow_mapped_id, m_does_m_M_horizontal_cilinder_contain_nonuniform_scaling_horizontal_cilinder ? 1 : 0); // DSA version: glProgramUniform1i(m_programID, m_does_model_transformation_contain_nonuniform_scalingID, m_does_m_M_contain_nonuniform_scaling ? 1 : 0);
 		glUniformMatrix4fv(m_shadow_M_shadow_id, 1, GL_FALSE, &m_M_horizontal_cilinder[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_MID, 1, GL_FALSE, &m_M[0][0]);
@@ -501,7 +501,7 @@ void App::render()
 		m_vao_plane.unBind();
 
 		fbo.unBind();
-		fbo.detach(m_tex_depth[k]);
+		fbo.detach(m_tex_depth_positional_light[k]);
 	}
 
 	#pragma endregion
@@ -515,8 +515,8 @@ void App::render()
 	glm::mat4 P = getPerspectiveProj(m_camera);
 	glUniformMatrix4fv(m_P_nor_matlight_shadow_mapped_id, 1, GL_FALSE, &P[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
 
-	glUniformMatrix4fv(m_shadow_V_nor_matlight_shadow_mapped_id, PositionalLight::lights.size(), GL_FALSE, &SV[0][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
-	glUniformMatrix4fv(m_shadow_P_nor_matlight_shadow_mapped_id, PositionalLight::lights.size(), GL_FALSE, &SP[0][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
+	glUniformMatrix4fv(m_positional_light_shadow_V_nor_matlight_shadow_mapped_id, PositionalLight::lights.size(), GL_FALSE, &positional_light_V[0][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
+	glUniformMatrix4fv(m_positional_light_shadow_P_nor_matlight_shadow_mapped_id, PositionalLight::lights.size(), GL_FALSE, &positional_light_P[0][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
 	
 	m_tex_matdiff_wall.bind();
 	glUniform1i(m_tex_matdiff_nor_matlight_shadow_mapped_id, m_tex_matdiff_wall); // DSA version: glProgramUniform1i(m_programID, m_tex_diffID, m_tex);
@@ -528,10 +528,10 @@ void App::render()
 	m_tex_depth_channel_ids.resize(PositionalLight::lights.size());
 	for (int i = 0; i < PositionalLight::lights.size(); ++i)
 	{
-		m_tex_depth[i].ownerBind(i);
+		m_tex_depth_positional_light[i].ownerBind(i);
 		m_tex_depth_channel_ids[i] = i;
 	}
-	glUniform1iv(m_tex_shadow_nor_matlight_shadow_mapped_id, PositionalLight::lights.size(), &m_tex_depth_channel_ids[0]);
+	glUniform1iv(m_tex_positional_light_shadow_nor_matlight_shadow_mapped_id, PositionalLight::lights.size(), &m_tex_depth_channel_ids[0]);
 
 	PositionalLight::assignUniformsForAll();
 	DirectionalLight::assignUniformsForAll();
@@ -601,7 +601,7 @@ void App::render()
 	m_tex_nor_wall.unBind();
 	for (int i = 0; i < PositionalLight::lights.size(); ++i)
 	{
-		m_tex_depth[i].ownerUnBind();
+		m_tex_depth_positional_light[i].ownerUnBind();
 	}
 
 	#pragma endregion

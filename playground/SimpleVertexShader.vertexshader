@@ -22,7 +22,7 @@ out vec3 out_vert_pos;
 //out vec3 out_vert_nor;
 out vec2 out_vert_tex;
 out mat3 out_vert_TBN;
-out vec4 out_vert_shadow[num_of_positional_lights];
+out vec4 out_vert_positional_light_shadow[num_of_positional_lights];
   
 // Values that stay constant for the whole mesh.
 uniform mat4 V;
@@ -30,8 +30,8 @@ uniform mat4 P;
 uniform int is_model_nonuniform_scaled = 0;
 uniform mat4 M;
 
-uniform mat4 shadow_V[num_of_positional_lights];
-uniform mat4 shadow_P[num_of_positional_lights];
+uniform mat4 positional_light_shadow_V[num_of_positional_lights];
+uniform mat4 positional_light_shadow_P[num_of_positional_lights];
 
 
 void main()
@@ -52,7 +52,7 @@ void main()
 	
 	for(int i = 0; i < num_of_positional_lights; ++i)
 	{
-		out_vert_shadow[i] = biasMatrix * shadow_P[i] * shadow_V[i] * M * vec4(in_vert_pos, 1.0f);
+		out_vert_positional_light_shadow[i] = biasMatrix * positional_light_shadow_P[i] * positional_light_shadow_V[i] * M * vec4(in_vert_pos, 1.0f);
 	}
 }
 )"

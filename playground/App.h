@@ -53,9 +53,9 @@ class App final
 	GLint m_tex_norm_nor_matlight_shadow_mapped_id;
 	GLint m_does_model_transformation_contain_nonuniform_scaling_nor_matlight_shadow_mapped_id;
 	
-	GLint m_shadow_V_nor_matlight_shadow_mapped_id;
-	GLint m_tex_shadow_nor_matlight_shadow_mapped_id;
-	GLint m_shadow_P_nor_matlight_shadow_mapped_id;
+	GLint m_positional_light_shadow_V_nor_matlight_shadow_mapped_id;
+	GLint m_tex_positional_light_shadow_nor_matlight_shadow_mapped_id;
+	GLint m_positional_light_shadow_P_nor_matlight_shadow_mapped_id;
 
 	PositionalLight  light_positional_1;
 	PositionalLight  light_positional_2;
@@ -73,7 +73,7 @@ class App final
 
 	InPutObserverCamera m_camera;
 
-	std::vector<TEX<DepthTexData>> m_tex_depth;
+	std::vector<TEX<DepthTexData>> m_tex_depth_positional_light;
 	FBO fbo;
 	GLint m_program_shadow_id;
 
@@ -81,8 +81,8 @@ class App final
 	GLint m_shadow_V_shadow_id;
 	GLint m_shadow_P_shadow_id;
 
-	std::vector<glm::mat4> SV;
-	std::vector<glm::mat4> SP;
+	std::vector<glm::mat4> positional_light_V;
+	std::vector<glm::mat4> positional_light_P;
 
 public:
 

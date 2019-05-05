@@ -10,13 +10,13 @@ in vec3 out_vert_pos;
 in vec2 out_vert_tex;
 in mat3 out_vert_TBN;
 
-in vec4 out_vert_shadow[num_of_positional_lights];
+in vec4 out_vert_positional_light_shadow[num_of_positional_lights];
 
 
 uniform sampler2D tex_matdiff_sampler;
 uniform sampler2D tex_matspec_sampler;
 uniform sampler2D tex_norm_sampler;
-uniform sampler2D shadowMap[num_of_positional_lights];
+uniform sampler2D positional_light_shadow_map[num_of_positional_lights];
 
 uniform float positional_light_power[num_of_positional_lights];
 uniform vec3  positional_light_pos[num_of_positional_lights];
@@ -54,12 +54,12 @@ void main()
 {
 	vec3 color = vec3(0.0f, 0.0f, 0.0f);
 
-	//float visibility = texture(shadowMap, vec3(out_vert_shadow.xy, out_vert_shadow.z / out_vert_shadow.w));
+	//float visibility = texture(positional_light_shadow_map, vec3(out_vert_positional_light_shadow.xy, out_vert_positional_light_shadow.z / out_vert_positional_light_shadow.w));
 
 	for(int i = 0; i < num_of_positional_lights; ++i)
 	{
 		float visibility = 1.0;
-		if(out_vert_shadow[i].z / out_vert_shadow[i].w > texture(shadowMap[i], out_vert_shadow[i].xy / out_vert_shadow[i].w).r + 0.01f)
+		if(out_vert_positional_light_shadow[i].z / out_vert_positional_light_shadow[i].w > texture(positional_light_shadow_map[i], out_vert_positional_light_shadow[i].xy / out_vert_positional_light_shadow[i].w).r + 0.01f)
 		{
 		   visibility = 0.0f;
 		}
