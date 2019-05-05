@@ -53,9 +53,10 @@ class App final
 	GLint m_tex_norm_nor_matlight_shadow_mapped_id;
 	GLint m_does_model_transformation_contain_nonuniform_scaling_nor_matlight_shadow_mapped_id;
 	static constexpr GLint num_of_positional_lights = 2;
-	GLint m_shadow_V_nor_matlight_shadow_mapped_id; //
-	GLint m_tex_shadow_nor_matlight_shadow_mapped_id; //
-	GLint m_shadow_P_nor_matlight_shadow_mapped_id; //
+	
+	GLint m_shadow_V_nor_matlight_shadow_mapped_id;
+	GLint m_tex_shadow_nor_matlight_shadow_mapped_id;
+	GLint m_shadow_P_nor_matlight_shadow_mapped_id;
 
 	PositionalLight  light_positional[num_of_positional_lights];
 	DirectionalLight light_directional;
