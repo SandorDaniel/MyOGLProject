@@ -7,9 +7,6 @@ const mat4 biasMatrix = mat4( // Multiplying the vertex’ position by depthMVP wi
 );
 
 
-const int num_of_positional_lights  = 2; // TODO: get it from cpu somehow
-const int num_of_directional_lights = 1; // TODO: get it from cpu somehow
-
 // Input vertex data, different for all executions of this shader.
 layout(location = 0) in vec3 in_vert_pos;
 //layout(location = 1) in vec3 in_vert_nor;
@@ -23,6 +20,7 @@ out vec3 out_vert_pos;
 out vec2 out_vert_tex;
 out mat3 out_vert_TBN;
 out vec4 out_vert_positional_light_shadow[num_of_positional_lights];
+out vec4 out_vert_directional_light_shadow[num_of_directional_lights];
   
 // Values that stay constant for the whole mesh.
 uniform mat4 V;
@@ -32,6 +30,9 @@ uniform mat4 M;
 
 uniform mat4 positional_light_shadow_V[num_of_positional_lights];
 uniform mat4 positional_light_shadow_P[num_of_positional_lights];
+
+uniform mat4 directional_light_shadow_V[num_of_directional_lights];
+uniform mat4 directional_light_shadow_P[num_of_directional_lights];
 
 
 void main()
@@ -53,6 +54,11 @@ void main()
 	for(int i = 0; i < num_of_positional_lights; ++i)
 	{
 		out_vert_positional_light_shadow[i] = biasMatrix * positional_light_shadow_P[i] * positional_light_shadow_V[i] * M * vec4(in_vert_pos, 1.0f);
+	}
+	
+	for(int i = 0; i < num_of_directional_lights; ++i)
+	{
+		out_vert_directional_light_shadow[i] = biasMatrix * directional_light_shadow_P[i] * directional_light_shadow_V[i] * M * vec4(in_vert_pos, 1.0f);
 	}
 }
 )"

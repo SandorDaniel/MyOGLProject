@@ -57,9 +57,14 @@ class App final
 	GLint m_tex_positional_light_shadow_nor_matlight_shadow_mapped_id;
 	GLint m_positional_light_shadow_P_nor_matlight_shadow_mapped_id;
 
+	GLint m_directional_light_shadow_V_nor_matlight_shadow_mapped_id;
+	GLint m_tex_directional_light_shadow_nor_matlight_shadow_mapped_id;
+	GLint m_directional_light_shadow_P_nor_matlight_shadow_mapped_id;
+
 	PositionalLight  light_positional_1;
 	PositionalLight  light_positional_2;
-	DirectionalLight light_directional;
+	DirectionalLight light_directional_1;
+	DirectionalLight light_directional_2;
 
 	glm::mat4 m_M_horizontal_cilinder = glm::mat4(1.0f); // glm::mat4(1.0f) is the identity matrix
 	bool m_does_m_M_horizontal_cilinder_contain_nonuniform_scaling_horizontal_cilinder = false;
@@ -74,6 +79,7 @@ class App final
 	InPutObserverCamera m_camera;
 
 	std::vector<TEX<DepthTexData>> m_tex_depth_positional_light;
+	std::vector<TEX<DepthTexData>> m_tex_depth_directional_light;
 	FBO fbo;
 	GLint m_program_shadow_id;
 
@@ -83,6 +89,9 @@ class App final
 
 	std::vector<glm::mat4> positional_light_V;
 	std::vector<glm::mat4> positional_light_P;
+
+	std::vector<glm::mat4> directional_light_V;
+	std::vector<glm::mat4> directional_light_P;
 
 public:
 
