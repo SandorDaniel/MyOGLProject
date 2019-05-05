@@ -6,10 +6,6 @@ R"(
 // TODO: multiple lights (array)
 
 
-const int num_of_positional_lights  = 2; // TODO: get it from cpu somehow
-const int num_of_directional_lights = 1; // TODO: get it from cpu somehow
-
-
 in vec3 out_vert_pos;
 in vec2 out_vert_tex;
 in mat3 out_vert_TBN;

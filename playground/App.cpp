@@ -2,6 +2,7 @@
 #include "Debug.h" // TODO rename to sdd
 
 #include <vector>
+#include <string>
 
 #include <GL/glew.h>
 
@@ -177,9 +178,16 @@ void App::init()
 	const char* fs =
 	#include "SimpleFragmentShader.fragmentshader"
 		;
+	std::string num_of_lights =
+		std::string("const int num_of_positional_lights = ") +
+		std::to_string(PositionalLight::lights.size()) +
+		std::string(";") +
+		std::string("const int num_of_directional_lights = ") +
+		std::to_string(DirectionalLight::lights.size()) +
+		std::string(";");
 	m_program_nor_matlight_shadow_mapped_id = LoadShaders(
 		std::vector<const char*>{"#version 330 core\n", vs},
-		std::vector<const char*>{"#version 330 core\n", sl, fs});
+		std::vector<const char*>{"#version 330 core\n", sl, num_of_lights.c_str(), fs});
 
 	// Get a handle for our uniform variables
 	// Only during the initialisation
