@@ -1,7 +1,4 @@
 R"(
-#version 330 core
-
-
 const mat4 biasMatrix = mat4( // Multiplying the vertex’ position by depthMVP will give homogeneous coordinates, which are in [-1,1]; but texture sampling must be done in [0,1].
 	0.5, 0.0, 0.0, 0.0,
 	0.0, 0.5, 0.0, 0.0,

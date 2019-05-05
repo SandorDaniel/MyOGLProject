@@ -117,6 +117,7 @@ add_executable(
 	playground/ShadowVertexShader.vertexshader
 	playground/SimpleFragmentShader.fragmentshader
 	playground/SimpleVertexShader.vertexshader
+	playground/ShaderLib.shaderlib
 )
 target_link_libraries(playground
 	${ALL_LIBS}
@@ -133,7 +134,7 @@ target_compile_features(playground PUBLIC cxx_std_11)
 
 
 SOURCE_GROUP(Common REGULAR_EXPRESSION ".*/common/.*" )
-SOURCE_GROUP(Shaders REGULAR_EXPRESSION ".*shader$" )
+SOURCE_GROUP(Shaders REGULAR_EXPRESSION ".*shader$|.*shaderlib" )
 
 
 configure_file("tutorial13_normal_mapping/cylinder.obj.in" "cylinder.obj" COPYONLY)

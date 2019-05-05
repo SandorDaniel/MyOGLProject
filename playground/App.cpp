@@ -168,6 +168,9 @@ void App::init()
 	#pragma region GPU-Side-Program SetUp (loading and compiling sahders, setting up uniform variables)
 
 	// Create and compile our GLSL program from the shaders
+	const char* sl =
+	#include "ShaderLib.shaderlib"
+		;
 	const char* vs =
 	#include "SimpleVertexShader.vertexshader"
 		;
@@ -175,8 +178,8 @@ void App::init()
 	#include "SimpleFragmentShader.fragmentshader"
 		;
 	m_program_nor_matlight_shadow_mapped_id = LoadShaders(
-		std::vector<const char*>{vs},
-		std::vector<const char*>{fs});
+		std::vector<const char*>{"#version 330 core\n", vs},
+		std::vector<const char*>{"#version 330 core\n", sl, fs});
 
 	// Get a handle for our uniform variables
 	// Only during the initialisation
@@ -205,8 +208,8 @@ void App::init()
 	#include "ShadowFragmentShader.fragmentshader"
 	;
 	m_program_shadow_id = LoadShaders(
-		std::vector<const char*>{vs},
-		std::vector<const char*>{fs});
+		std::vector<const char*>{"#version 330 core\n", vs},
+		std::vector<const char*>{"#version 330 core\n", fs});
 
 	m_shadow_M_shadow_id = glGetUniformLocation(m_program_shadow_id, "M");
 	m_shadow_V_shadow_id = glGetUniformLocation(m_program_shadow_id, "V");
