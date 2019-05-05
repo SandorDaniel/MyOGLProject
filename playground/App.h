@@ -74,7 +74,7 @@ class App final
 	InPutObserverCamera m_camera;
 
 	std::vector<TEX<DepthTexData>> m_tex_depth;
-	std::vector<FBO> fbo;
+	FBO fbo;
 	GLint m_program_shadow_id;
 
 	GLint m_shadow_M_shadow_id;

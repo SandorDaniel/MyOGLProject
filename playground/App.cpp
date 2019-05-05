@@ -213,18 +213,12 @@ void App::init()
 	m_shadow_P_shadow_id = glGetUniformLocation(m_program_shadow_id, "P");
 
 	m_tex_depth.resize(PositionalLight::lights.size());
-	fbo.resize(PositionalLight::lights.size());
 	SV.resize(PositionalLight::lights.size());
 	SP.resize(PositionalLight::lights.size());
 	
 	for (int i = 0; i < PositionalLight::lights.size(); ++i)
 	{
 		m_tex_depth[i].alloc(1024, 1024);
-	}
-
-	for (int k = 0; k < PositionalLight::lights.size(); ++k)
-	{
-		fbo[k].attach(m_tex_depth[k]);
 	}
 
 	#pragma endregion
@@ -405,7 +399,8 @@ void App::render()
 
 	for (int k = 0; k < PositionalLight::lights.size(); ++k)
 	{
-		fbo[k].bind();
+		fbo.attach(m_tex_depth[k]);
+		fbo.bind();
 
 		// shadow of positional light
 		{
@@ -494,7 +489,8 @@ void App::render()
 
 		m_vao_plane.unBind();
 
-		fbo[k].unBind();
+		fbo.unBind();
+		fbo.detach(m_tex_depth[k]);
 	}
 
 	#pragma endregion
