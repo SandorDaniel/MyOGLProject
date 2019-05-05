@@ -211,13 +211,18 @@ void App::init()
 	m_shadow_M_shadow_id = glGetUniformLocation(m_program_shadow_id, "M");
 	m_shadow_V_shadow_id = glGetUniformLocation(m_program_shadow_id, "V");
 	m_shadow_P_shadow_id = glGetUniformLocation(m_program_shadow_id, "P");
+
+	m_tex_depth.resize(PositionalLight::lights.size());
+	fbo.resize(PositionalLight::lights.size());
+	SV.resize(PositionalLight::lights.size());
+	SP.resize(PositionalLight::lights.size());
 	
-	for (int i = 0; i < num_of_positional_lights; ++i)
+	for (int i = 0; i < PositionalLight::lights.size(); ++i)
 	{
 		m_tex_depth[i].alloc(1024, 1024);
 	}
 
-	for (int k = 0; k < num_of_positional_lights; ++k)
+	for (int k = 0; k < PositionalLight::lights.size(); ++k)
 	{
 		fbo[k].attach(m_tex_depth[k]);
 	}
@@ -274,21 +279,21 @@ void App::upDate()
 
 	#pragma region LIGHTS UpDate
 
-	light_positional[0].setPower(10000.0f);
-	light_positional[0].setPos(glm::vec3(0.0f, 5.0f, 5.0f));
-	light_positional[0].setAngleInRadians(glm::radians<float>(6));
-	light_positional[0].setDir(glm::vec3(0.0f, -1.0f, -1.0f));
-	light_positional[0].setDiffuseCol (0.01f   * glm::vec3(1.0f, 1.0f, 1.0f));
-	light_positional[0].setSpecularCol(0.0001f * glm::vec3(1.0f, 1.0f, 1.0f));
-	light_positional[0].setAmbientCol (1.0f    * glm::vec3(1.0f, 1.0f, 1.0f));
+	light_positional_1.setPower(10000.0f);
+	light_positional_1.setPos(glm::vec3(0.0f, 5.0f, 5.0f));
+	light_positional_1.setAngleInRadians(glm::radians<float>(6));
+	light_positional_1.setDir(glm::vec3(0.0f, -1.0f, -1.0f));
+	light_positional_1.setDiffuseCol (0.01f   * glm::vec3(1.0f, 1.0f, 1.0f));
+	light_positional_1.setSpecularCol(0.0001f * glm::vec3(1.0f, 1.0f, 1.0f));
+	light_positional_1.setAmbientCol (1.0f    * glm::vec3(1.0f, 1.0f, 1.0f));
 
-	light_positional[1].setPower(10000.0f);
-	light_positional[1].setPos(glm::vec3(1.0f, 1.0f, 5.0f));
-	light_positional[1].setAngleInRadians(glm::radians<float>(6));
-	light_positional[1].setDir(glm::vec3(0.0f, 0.0f, -1.0f));
-	light_positional[1].setDiffuseCol(0.01f   * glm::vec3(1.0f, 1.0f, 1.0f));
-	light_positional[1].setSpecularCol(0.0001f * glm::vec3(1.0f, 1.0f, 1.0f));
-	light_positional[1].setAmbientCol(1.0f    * glm::vec3(1.0f, 1.0f, 1.0f));
+	light_positional_2.setPower(10000.0f);
+	light_positional_2.setPos(glm::vec3(1.0f, 1.0f, 5.0f));
+	light_positional_2.setAngleInRadians(glm::radians<float>(6));
+	light_positional_2.setDir(glm::vec3(0.0f, 0.0f, -1.0f));
+	light_positional_2.setDiffuseCol(0.01f   * glm::vec3(1.0f, 1.0f, 1.0f));
+	light_positional_2.setSpecularCol(0.0001f * glm::vec3(1.0f, 1.0f, 1.0f));
+	light_positional_2.setAmbientCol(1.0f    * glm::vec3(1.0f, 1.0f, 1.0f));
 
 	light_directional.setPower(0.0f * 3.0f);
 	light_directional.setDir(glm::vec3(-1.0f, -1.0f, -1.0f));
@@ -398,16 +403,16 @@ void App::render()
 
 	glUseProgram(m_program_shadow_id);
 
-	for (int k = 0; k < num_of_positional_lights; ++k)
+	for (int k = 0; k < PositionalLight::lights.size(); ++k)
 	{
 		fbo[k].bind();
 
 		// shadow of positional light
 		{
-			Camera cam(light_positional[k]);
+			Camera cam(*PositionalLight::lights[k]);
 			cam.setWin(window);
-			cam.setPos(light_positional[k].getPos());
-			cam.setFov(light_positional[k].getAngleInRadians()); // TODO: handle the case if window height is bigger than window width
+			cam.setPos(PositionalLight::lights[k]->getPos());
+			cam.setFov(PositionalLight::lights[k]->getAngleInRadians()); // TODO: handle the case if window height is bigger than window width
 
 			float thickness;
 			{
@@ -503,8 +508,8 @@ void App::render()
 	glm::mat4 P = getPerspectiveProj(m_camera);
 	glUniformMatrix4fv(m_P_nor_matlight_shadow_mapped_id, 1, GL_FALSE, &P[0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
 
-	glUniformMatrix4fv(m_shadow_V_nor_matlight_shadow_mapped_id, num_of_positional_lights, GL_FALSE, &SV[0][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
-	glUniformMatrix4fv(m_shadow_P_nor_matlight_shadow_mapped_id, num_of_positional_lights, GL_FALSE, &SP[0][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
+	glUniformMatrix4fv(m_shadow_V_nor_matlight_shadow_mapped_id, PositionalLight::lights.size(), GL_FALSE, &SV[0][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
+	glUniformMatrix4fv(m_shadow_P_nor_matlight_shadow_mapped_id, PositionalLight::lights.size(), GL_FALSE, &SP[0][0][0]); // DSA version: glProgramUniformMatrix4fv(m_programID, m_PID, 1, GL_FALSE, &P[0][0]);
 	
 	m_tex_matdiff_wall.bind();
 	glUniform1i(m_tex_matdiff_nor_matlight_shadow_mapped_id, m_tex_matdiff_wall); // DSA version: glProgramUniform1i(m_programID, m_tex_diffID, m_tex);
@@ -512,13 +517,14 @@ void App::render()
 	glUniform1i(m_tex_matspec_nor_matlight_shadow_mapped_id, m_tex_matspec_wall);
 	m_tex_nor_wall.bind();
 	glUniform1i(m_tex_norm_nor_matlight_shadow_mapped_id, m_tex_nor_wall);
-	GLint m_tex_depth_channel_ids[num_of_positional_lights];
-	for (int i = 0; i < num_of_positional_lights; ++i)
+	std::vector<GLint> m_tex_depth_channel_ids;
+	m_tex_depth_channel_ids.resize(PositionalLight::lights.size());
+	for (int i = 0; i < PositionalLight::lights.size(); ++i)
 	{
 		m_tex_depth[i].ownerBind(i);
 		m_tex_depth_channel_ids[i] = i;
 	}
-	glUniform1iv(m_tex_shadow_nor_matlight_shadow_mapped_id, num_of_positional_lights, m_tex_depth_channel_ids);
+	glUniform1iv(m_tex_shadow_nor_matlight_shadow_mapped_id, PositionalLight::lights.size(), &m_tex_depth_channel_ids[0]);
 
 	PositionalLight::assignUniformsForAll();
 	DirectionalLight::assignUniformsForAll();
@@ -586,7 +592,7 @@ void App::render()
 	m_tex_matdiff_wall.unBind();
 	m_tex_matspec_wall.unBind();
 	m_tex_nor_wall.unBind();
-	for (int i = 0; i < num_of_positional_lights; ++i)
+	for (int i = 0; i < PositionalLight::lights.size(); ++i)
 	{
 		m_tex_depth[i].ownerUnBind();
 	}
