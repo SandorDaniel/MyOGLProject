@@ -312,13 +312,13 @@ void App::upDate()
 	light_positional_2.setSpecularCol(0.0001f * glm::vec3(1.0f, 1.0f, 1.0f));
 	light_positional_2.setAmbientCol(1.0f    * glm::vec3(1.0f, 1.0f, 1.0f));
 
-	light_directional_1.setPower(3.0f);
+	light_directional_1.setPower(1.0f);
 	light_directional_1.setDir(glm::vec3(-1.0f, -1.0f, -1.0f));
 	light_directional_1.setDiffuseCol (1.0f   * glm::vec3(1.0f, 1.0f, 0.8f));
 	light_directional_1.setSpecularCol(0.7f   * glm::vec3(1.0f, 1.0f, 0.8f));
 	light_directional_1.setAmbientCol (20.0f  * glm::vec3(1.0f, 1.0f, 0.8f));
 
-	light_directional_2.setPower(3.0f);
+	light_directional_2.setPower(1.0f);
 	light_directional_2.setDir(glm::vec3(0.0f, -1.0f, 0.0f));
 	light_directional_2.setDiffuseCol(1.0f   * glm::vec3(1.0f, 1.0f, 0.8f));
 	light_directional_2.setSpecularCol(0.7f   * glm::vec3(1.0f, 1.0f, 0.8f));
